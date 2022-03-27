@@ -1,12 +1,10 @@
 import React from 'react'
 import logo from './logo.svg'
-import CssBaseline from '@mui/material/CssBaseline'
 import makeStyles from '@mui/styles/makeStyles'
-import { Counter } from './components/counter/Counter'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import SearchBar from './components/searchBar/SearchBar'
-import FeaturedProducts from './components/featuredProducts/FeauturedProducts'
+import FeaturedProducts from './components/featuredProducts/FeaturedProducts'
 
 const useStyle = makeStyles({
   header: {
