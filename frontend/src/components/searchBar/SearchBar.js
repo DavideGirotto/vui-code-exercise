@@ -63,13 +63,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 const CategoriesContainer = styled(Box)({
-  marginTop: '16px'
+  marginTop: '16px',
+  textAlign: 'center'
 })
 
 const Category = styled(Chip)({
   marginRight: '8px',
   marginBottom: '8px',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  height: '44px',
+  fontSize: '14px'
 })
 
 export default function SearchBar () {
