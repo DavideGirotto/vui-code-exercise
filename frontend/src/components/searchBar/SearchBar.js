@@ -109,7 +109,7 @@ export default function SearchBar () {
       <SearchWrapper elevation={status !== 'closed' ? 3 : 0}>
         <SearchField sx={status !== 'closed' ? { border: '2px solid #264990' } : {}}>
           <StyledInputBase
-            placeholder='Search…'
+            placeholder='Search for a product or brand…'
             value={searchText}
             onFocus={() => setStatus('open')}
             onChange={e => handleTextChange(e.target.value)}
