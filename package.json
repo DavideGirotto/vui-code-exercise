@@ -1,0 +1,25 @@
+{
+  "name": "vui-code-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"ts-node ./backend/index.ts\" \"npm --prefix ./frontend run start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavideGirotto/vui-code-exercise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavideGirotto/vui-code-exercise/issues"
+  },
+  "homepage": "https://github.com/DavideGirotto/vui-code-exercise#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0",
+    "ts-node": "^10.7.0"
+  }
+}
