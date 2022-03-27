@@ -1,4 +1,7 @@
 import { styled, alpha } from '@mui/material/styles'
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
@@ -62,6 +65,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
+const AvailabilityFilter = styled(FormGroup)(({ theme }) => ({
+  display: 'inline-block',
+  marginTop: '8px',
+  marginLeft: '4px',
+  '& .MuiCheckbox-root': {
+    marginRight: '4px'
+  },
+  '& svg': {
+    color: '#c4c4c4'
+  },
+  '& .Mui-checked svg': {
+    color: theme.palette.primary.main
+  } 
+}))
+
 const CategoriesContainer = styled(Box)({
   marginTop: '16px',
   textAlign: 'center'
@@ -100,6 +118,10 @@ export default function SearchBar () {
             <SearchIcon />
           </SearchIconWrapper>
         </SearchField>
+
+        <AvailabilityFilter>
+          <FormControlLabel control={<Checkbox />} label="Show only available products" />
+        </AvailabilityFilter>
 
         {status === 'open' &&
           <CategoriesContainer>

@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
 
 const FeaturedProductsContainer = styled(Box)({
-  marginTop: '32px'
+  marginTop: '64px'
 })
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
