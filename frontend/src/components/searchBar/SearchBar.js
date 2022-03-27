@@ -103,14 +103,19 @@ export default function SearchBar () {
 
         {status === 'open' &&
           <CategoriesContainer>
-            {categories.map((category) => (
-              <Category label={category} onClick={() => handleTextChange(category)}/>
+            {categories.map((category, index) => (
+              <Category key={index} label={category} onClick={() => handleTextChange(category)} />
             ))}
           </CategoriesContainer>}
+
+        {status === 'expanded' &&
+          <Box>
+            test
+          </Box>}
       </SearchWrapper>
 
       <Backdrop
-        sx={{ color: '#fff', zIndex: 1}}
+        sx={{ color: '#fff', zIndex: 1 }}
         open={status !== 'closed'}
         onClick={() => setStatus('closed')}
       />
