@@ -19,7 +19,6 @@ function App () {
 
   return (
     <>
-      <CssBaseline />
       <Container maxWidth={false}>
         <Grid
           className={classes.header}
