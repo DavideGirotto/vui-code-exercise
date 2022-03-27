@@ -1,7 +1,7 @@
 import { styled, alpha } from '@mui/material/styles'
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
@@ -10,6 +10,7 @@ import Chip from '@mui/material/Chip'
 import Backdrop from '@mui/material/Backdrop'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { getSearchResults, selectSearchResults } from './searchBarSlice'
 
 const SearchContainer = styled(Box)({
   position: 'relative',
@@ -77,7 +78,7 @@ const AvailabilityFilter = styled(FormGroup)(({ theme }) => ({
   },
   '& .Mui-checked svg': {
     color: theme.palette.primary.main
-  } 
+  }
 }))
 
 const CategoriesContainer = styled(Box)({
@@ -99,6 +100,10 @@ export default function SearchBar () {
   const [status, setStatus] = useState('closed')
   const categories = ['Top Picks', 'Deals Of The Day', 'Appliances', 'Bath', 'Outdoor Power Equipment', 'Grills', 'Seasonal Decor', 'Tools', 'Kitchen', 'Lighting And Ceiling Fans', 'Lawn & Garden', 'Paint', 'Fire Pits & Patio Heaters']
 
+  const handleSearch = () => {
+    dispatch(getSearchResults())
+  }
+
   const handleTextChange = value => {
     setStatus('expanded')
     setSearchText(value)
@@ -114,13 +119,14 @@ export default function SearchBar () {
             onFocus={() => setStatus('open')}
             onChange={e => handleTextChange(e.target.value)}
           />
-          <SearchIconWrapper>
+
+          <SearchIconWrapper onClick={handleSearch}>
             <SearchIcon />
           </SearchIconWrapper>
         </SearchField>
 
         <AvailabilityFilter>
-          <FormControlLabel control={<Checkbox />} label="Show only available products" />
+          <FormControlLabel control={<Checkbox />} label='Show only available products' />
         </AvailabilityFilter>
 
         {status === 'open' &&

@@ -1,4 +1,4 @@
-export const serverUrl = 'http://localhost:3080/'
+export const serverUrl = 'http://localhost:3080'
 
 const jsonResponse = async (response) => {
   const result = await response.json()
