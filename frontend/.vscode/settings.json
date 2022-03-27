@@ -1,0 +1,29 @@
+{
+  "editor.defaultFormatter": "standard.vscode-standard",
+  "javascript.validate.enable": false,
+  "standard.autoFixOnSave": true,
+  "standard.enable": true,
+  "standard.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "standard.usePackageJson": true,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "debug.javascript.autoAttachFilter": "smart",
+  "editor.formatOnSave": true,
+  "standard.run": "onType",
+  "jest.debugCodeLens.showWhenTestStateIn": [
+    "fail",
+    "unknown",
+    "pass"
+  ],
+  "jest.jestCommandLine": "npm run test --",
+  "jest.testExplorer": {
+    "enabled": true
+  },
+  "jest.autoRun": {
+    "watch": false, 
+    "onStartup": ["all-tests"],
+    "onSave": "test-file"
+  }
+}
