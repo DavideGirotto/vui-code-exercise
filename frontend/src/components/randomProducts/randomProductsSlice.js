@@ -43,7 +43,7 @@ export const randomProductsSlice = createSlice({
           state.isFetchingProducts = false
 
           if (action.payload) {
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 3; i++) {
               state.data.push(action.payload[Math.floor((Math.random() * 9))])
             }
           } else {
