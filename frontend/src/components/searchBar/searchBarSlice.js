@@ -8,7 +8,7 @@ const initialState = {
   isFetchingAutocomplete: false,
   autocompleteRequestId: null,
 
-  categorySuggestions: ['Top Picks', 'Deals Of The Day', 'Appliances', 'Bath', 'Outdoor Power Equipment', 'Grills', 'Seasonal Decor', 'Tools', 'Kitchen', 'Lighting And Ceiling Fans', 'Lawn & Garden', 'Paint', 'Fire Pits & Patio Heaters'],
+  categorieSuggestions: ['Top Picks', 'Deals Of The Day', 'Appliances', 'Bath', 'Outdoor Power Equipment', 'Grills', 'Seasonal Decor', 'Tools', 'Kitchen', 'Lighting And Ceiling Fans', 'Lawn & Garden', 'Paint', 'Fire Pits & Patio Heaters'],
 
   productsSuggestions: [],
   isFetchingProducts: false,
@@ -72,6 +72,7 @@ export const searchBarSlice = createSlice({
 
 export const { resetSearch } = searchBarSlice.actions
 
-export const selectSearchResults = (state) => state.searchResults
+export const selectSearchResults = (state) => state.searchBar.searchResults
+export const selectCategoriesSuggestions = (state) => state.searchBar.categorieSuggestions
 
 export default searchBarSlice.reducer

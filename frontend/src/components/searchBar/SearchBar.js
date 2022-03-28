@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip'
 import Backdrop from '@mui/material/Backdrop'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSearchResults, selectSearchResults } from './searchBarSlice'
+import { getSearchResults, selectCategoriesSuggestions, selectSearchResults } from './searchBarSlice'
 
 const SearchContainer = styled(Box)({
   position: 'relative',
@@ -98,7 +98,7 @@ export default function SearchBar () {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [status, setStatus] = useState('closed')
-  const categories = ['Top Picks', 'Deals Of The Day', 'Appliances', 'Bath', 'Outdoor Power Equipment', 'Grills', 'Seasonal Decor', 'Tools', 'Kitchen', 'Lighting And Ceiling Fans', 'Lawn & Garden', 'Paint', 'Fire Pits & Patio Heaters']
+  const categories = useSelector(selectCategoriesSuggestions)
 
   const handleSearch = () => {
     dispatch(getSearchResults())
