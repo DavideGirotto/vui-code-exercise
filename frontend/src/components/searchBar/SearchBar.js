@@ -139,6 +139,13 @@ export default function SearchBar () {
   const products = useSelector(selectProducts)
 
   const handleSearch = () => {
+    setStatus('closed')
+    dispatch(getSearchResults())
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    setStatus('closed')
     dispatch(getSearchResults())
   }
 
@@ -158,12 +165,15 @@ export default function SearchBar () {
     <SearchContainer>
       <SearchWrapper elevation={status !== 'closed' ? 3 : 0}>
         <SearchField sx={status !== 'closed' ? { border: '2px solid #264990' } : {}}>
-          <StyledInputBase
-            placeholder='Search for a product or brand…'
-            value={searchText}
-            onFocus={() => searchText === '' ? setStatus('open') : setStatus('expanded')}
-            onChange={e => handleTextChange(e.target.value)}
-          />
+          <form onSubmit={handleSubmit}> 
+            <StyledInputBase
+              placeholder='Search for a product or brand…'
+              value={searchText}
+              onFocus={() => searchText === '' ? setStatus('open') : setStatus('expanded')}
+              onChange={e => handleTextChange(e.target.value)}
+              onSubmit={handleSearch}
+            />
+          </form>
 
           <SearchIconWrapper onClick={handleSearch}>
             <SearchIcon />
