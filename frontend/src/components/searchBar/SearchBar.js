@@ -98,7 +98,7 @@ const Category = styled(Chip)({
 })
 
 const Autocomplete = styled(Grid)({
-  marginTop: '8px',
+  marginTop: '8px'
 })
 
 const AutocompleteItem = styled(Box)(({ theme }) => ({
@@ -162,14 +162,12 @@ export default function SearchBar () {
           </CategoriesContainer>}
 
         {status === 'expanded' &&
-          <Autocomplete container >
+          <Autocomplete container>
             <Grid item xs={12} sm={6}>
-                {autocompleteSuggestions.map(s => <AutocompleteItem onClick={() => handleSuggestionClick(s.name)}>{s.name}</AutocompleteItem>)}
+              {autocompleteSuggestions.map((s, index) => <AutocompleteItem key={index} onClick={() => handleSuggestionClick(s.name)}>{s.name}</AutocompleteItem>)}
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              
-            </Grid>
+            <Grid item xs={12} sm={6} />
           </Autocomplete>}
       </SearchWrapper>
 
