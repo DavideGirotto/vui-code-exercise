@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk(
     if (!isFetchingProducts || requestId !== productsRequestId) return
 
     try {
-      const response = await get(`${serverUrl}/search_query`)
+      const response = await get(`${serverUrl}/search`)
       return response
     } catch (err) {
       return rejectWithValue(err)

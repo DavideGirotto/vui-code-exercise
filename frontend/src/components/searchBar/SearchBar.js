@@ -1,20 +1,23 @@
 import { styled, alpha } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
-import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import Backdrop from '@mui/material/Backdrop'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSearchResults, selectCategoriesSuggestions } from '../../store/reducers/search'
+import { getAutocompleteSuggestions, getSearchResults, selectAutocompleteSuggestions, selectCategoriesSuggestions } from '../../store/reducers/search'
 
 const SearchContainer = styled(Box)({
   position: 'relative',
-  minHeight: '75px'
+  minHeight: '75px',
+  maxHeight: '560px'
 })
 
 const SearchWrapper = styled(Paper)({
@@ -69,7 +72,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const AvailabilityFilter = styled(FormGroup)(({ theme }) => ({
   display: 'inline-block',
   marginTop: '8px',
-  marginLeft: '4px',
+  marginLeft: '16px',
   '& .MuiCheckbox-root': {
     marginRight: '4px'
   },
@@ -94,11 +97,27 @@ const Category = styled(Chip)({
   fontSize: '14px'
 })
 
+const Autocomplete = styled(Grid)({
+  marginTop: '8px',
+})
+
+const AutocompleteItem = styled(Box)(({ theme }) => ({
+  padding: '16px',
+  cursor: 'pointer',
+  borderRadius: '16px',
+  transition: '300ms',
+  '&:hover': {
+    background: 'rgba(0, 0, 0, 0.08)',
+    color: theme.palette.primary.main
+  }
+}))
+
 export default function SearchBar () {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [status, setStatus] = useState('closed')
   const categories = useSelector(selectCategoriesSuggestions)
+  const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
 
   const handleSearch = () => {
     dispatch(getSearchResults())
@@ -107,6 +126,12 @@ export default function SearchBar () {
   const handleTextChange = value => {
     setStatus('expanded')
     setSearchText(value)
+    dispatch(getAutocompleteSuggestions(value))
+  }
+
+  const handleSuggestionClick = value => {
+    setSearchText(value)
+    setStatus('closed')
   }
 
   return (
@@ -116,7 +141,7 @@ export default function SearchBar () {
           <StyledInputBase
             placeholder='Search for a product or brand…'
             value={searchText}
-            onFocus={() => setStatus('open')}
+            onFocus={() => searchText === '' ? setStatus('open') : setStatus('expanded')}
             onChange={e => handleTextChange(e.target.value)}
           />
 
@@ -132,14 +157,20 @@ export default function SearchBar () {
         {status === 'open' &&
           <CategoriesContainer>
             {categories.map((category, index) => (
-              <Category key={index} label={category} onClick={() => handleTextChange(category)} />
+              <Category key={index} label={category} onClick={() => handleSuggestionClick(category)} />
             ))}
           </CategoriesContainer>}
 
         {status === 'expanded' &&
-          <Box>
-            test
-          </Box>}
+          <Autocomplete container >
+            <Grid item xs={12} sm={6}>
+                {autocompleteSuggestions.map(s => <AutocompleteItem onClick={() => handleSuggestionClick(s.name)}>{s.name}</AutocompleteItem>)}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              
+            </Grid>
+          </Autocomplete>}
       </SearchWrapper>
 
       <Backdrop

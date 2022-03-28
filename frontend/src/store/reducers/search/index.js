@@ -39,7 +39,23 @@ export const getSearchResults = createAsyncThunk(
     if (!isFetchingResults || requestId !== searchRequestId) return
 
     try {
-      const response = await get(`${serverUrl}/search_query`)
+      const response = await get(`${serverUrl}/search`)
+      return response
+    } catch (err) {
+      return rejectWithValue(err)
+    }
+  }
+)
+
+export const getAutocompleteSuggestions = createAsyncThunk(
+  'autocomplete/get',
+  async (searchTerm, { getState, requestId, dispatch, rejectWithValue }) => {
+    const { autocompleteRequestId, isFetchingAutocomplete } = getState().search
+
+    if (!isFetchingAutocomplete || requestId !== autocompleteRequestId) return
+
+    try {
+      const response = await get(`${serverUrl}/autocomplete`)
       return response
     } catch (err) {
       return rejectWithValue(err)
@@ -77,12 +93,36 @@ export const searchSlice = createSlice({
           state.searchRequestId = null
         }
       })
+
+      .addCase(getAutocompleteSuggestions.pending, (state, action) => {
+        if (state.isFetchingAutocomplete === false) {
+          state.isFetchingAutocomplete = true
+          state.autocompleteRequestId = action.meta.requestId
+        }
+      })
+      .addCase(getAutocompleteSuggestions.fulfilled, (state, action) => {
+        const { requestId } = action.meta
+        if (state.isFetchingAutocomplete === true && state.autocompleteRequestId === requestId) {
+          state.isFetchingAutocomplete = false
+          state.autocompleteSuggestions = action.payload || {}
+          state.autocompleteRequestId = null
+        }
+      })
+      .addCase(getAutocompleteSuggestions.rejected, (state, action) => {
+        const { requestId } = action.meta
+        if (state.isFetchingAutocomplete === true && state.autocompleteRequestId === requestId) {
+          state.isFetchingAutocomplete = false
+          state.error = action.error.message
+          state.autocompleteRequestId = null
+        }
+      })
   }
 })
 
 export const { resetSearch } = searchSlice.actions
 
 export const selectSearchResults = (state) => state.search.results
+export const selectAutocompleteSuggestions = (state) => state.search.autocompleteSuggestions
 export const selectCategoriesSuggestions = (state) => state.search.categoriesSuggestions
 
 export default searchSlice.reducer
