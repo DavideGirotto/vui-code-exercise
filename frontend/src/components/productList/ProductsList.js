@@ -14,7 +14,7 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import { useEffect, useState } from 'react'
 
 const ProductsListContainer = styled(Box)({
-  marginTop: '64px'
+  margin: '64px 0'
 })
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
