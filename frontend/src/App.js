@@ -6,8 +6,8 @@ import Grid from '@mui/material/Grid'
 import SearchBar from './components/searchBar/SearchBar'
 import ProductsList from './components/productList/ProductsList'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRandomProducts, selectRandomProducts, selectFetchingProducts } from './components/randomProducts/randomProductsSlice'
-import { selectSearchResults } from './components/searchBar/searchBarSlice'
+import { getProducts, selectFetchingProducts, selectProducts } from './store/reducers/products'
+import { selectSearchResults } from './store/reducers/search'
 
 const useStyle = makeStyles({
   header: {
@@ -18,11 +18,11 @@ const useStyle = makeStyles({
 function App () {
   const dispatch = useDispatch()
   const isFetchingProducts = useSelector(selectFetchingProducts)
-  const products = useSelector(selectRandomProducts)
+  const products = useSelector(selectProducts)
   const searchResults = useSelector(selectSearchResults)
 
   useEffect(() => {
-    if (products.length === 0) dispatch(getRandomProducts())
+    if (products.length === 0) dispatch(getProducts())
   }, [dispatch, products])
 
   const classes = useStyle()

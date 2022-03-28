@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip'
 import Backdrop from '@mui/material/Backdrop'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSearchResults, selectCategoriesSuggestions, selectSearchResults } from './searchBarSlice'
+import { getSearchResults, selectCategoriesSuggestions } from '../../store/reducers/search'
 
 const SearchContainer = styled(Box)({
   position: 'relative',

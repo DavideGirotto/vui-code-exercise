@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { get, serverUrl } from '../../app/utils'
+import { get, serverUrl } from '../../utils'
 
 const initialState = {
   currentSearchTerm: '',
@@ -8,13 +8,23 @@ const initialState = {
   isFetchingAutocomplete: false,
   autocompleteRequestId: null,
 
-  categorieSuggestions: ['Top Picks', 'Deals Of The Day', 'Appliances', 'Bath', 'Outdoor Power Equipment', 'Grills', 'Seasonal Decor', 'Tools', 'Kitchen', 'Lighting And Ceiling Fans', 'Lawn & Garden', 'Paint', 'Fire Pits & Patio Heaters'],
+  categorieSuggestions: [
+      'Top Picks', 
+      'Deals Of The Day', 
+      'Appliances', 
+      'Bath', 
+      'Outdoor Power Equipment', 
+      'Grills', 
+      'Seasonal Decor', 
+      'Tools', 
+      'Kitchen', 
+      'Lighting And Ceiling Fans', 
+      'Lawn & Garden', 
+      'Paint', 
+      'Fire Pits & Patio Heaters'
+    ],
 
-  productsSuggestions: [],
-  isFetchingProducts: false,
-  productsRequestId: null,
-
-  searchResults: [],
+  results: [],
   isFetchingResults: false,
   searchRequestId: null,
 
@@ -24,7 +34,7 @@ const initialState = {
 export const getSearchResults = createAsyncThunk(
   'results/get',
   async (context, { getState, requestId, dispatch, rejectWithValue }) => {
-    const { searchRequestId, isFetchingResults } = getState().searchBar
+    const { searchRequestId, isFetchingResults } = getState().search
 
     if (!isFetchingResults || requestId !== searchRequestId) return
 
@@ -37,8 +47,8 @@ export const getSearchResults = createAsyncThunk(
   }
 )
 
-export const searchBarSlice = createSlice({
-  name: 'searchBar',
+export const searchSlice = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     resetSearch: () => initialState
@@ -55,7 +65,7 @@ export const searchBarSlice = createSlice({
         const { requestId } = action.meta
         if (state.isFetchingResults === true && state.searchRequestId === requestId) {
           state.isFetchingResults = false
-          state.searchResults = action.payload || {}
+          state.results = action.payload || {}
           state.searchRequestId = null
         }
       })
@@ -70,9 +80,9 @@ export const searchBarSlice = createSlice({
   }
 })
 
-export const { resetSearch } = searchBarSlice.actions
+export const { resetSearch } = searchSlice.actions
 
-export const selectSearchResults = (state) => state.searchBar.searchResults
-export const selectCategoriesSuggestions = (state) => state.searchBar.categorieSuggestions
+export const selectSearchResults = (state) => state.search.results
+export const selectCategoriesSuggestions = (state) => state.search.categorieSuggestions
 
-export default searchBarSlice.reducer
+export default searchSlice.reducer

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { get, serverUrl } from '../../app/utils'
+import { get, serverUrl } from '../../utils'
 
 const initialState = {
   data: [],
@@ -8,10 +8,10 @@ const initialState = {
   error: null
 }
 
-export const getRandomProducts = createAsyncThunk(
+export const getProducts = createAsyncThunk(
   'products/get',
   async (context, { getState, requestId, dispatch, rejectWithValue }) => {
-    const { productsRequestId, isFetchingProducts } = getState().randomProducts
+    const { productsRequestId, isFetchingProducts } = getState().products
     if (!isFetchingProducts || requestId !== productsRequestId) return
 
     try {
@@ -23,21 +23,21 @@ export const getRandomProducts = createAsyncThunk(
   }
 )
 
-export const randomProductsSlice = createSlice({
-  name: 'randomProducts',
+export const productsSlice = createSlice({
+  name: 'products',
   initialState,
   reducers: {
     resetProducts: () => initialState
   },
   extraReducers: builder => {
     builder
-      .addCase(getRandomProducts.pending, (state, action) => {
+      .addCase(getProducts.pending, (state, action) => {
         if (state.isFetchingProducts === false) {
           state.isFetchingProducts = true
           state.productsRequestId = action.meta.requestId
         }
       })
-      .addCase(getRandomProducts.fulfilled, (state, action) => {
+      .addCase(getProducts.fulfilled, (state, action) => {
         const { requestId } = action.meta
         if (state.isFetchingProducts === true && state.productsRequestId === requestId) {
           state.isFetchingProducts = false
@@ -52,7 +52,7 @@ export const randomProductsSlice = createSlice({
           state.productsRequestId = null
         }
       })
-      .addCase(getRandomProducts.rejected, (state, action) => {
+      .addCase(getProducts.rejected, (state, action) => {
         const { requestId } = action.meta
         if (state.isFetchingProducts === true && state.productsRequestId === requestId) {
           state.isFetchingProducts = false
@@ -63,8 +63,8 @@ export const randomProductsSlice = createSlice({
   }
 })
 
-export const { resetProducts } = randomProductsSlice.actions
+export const { resetProducts } = productsSlice.actions
 
-export const selectRandomProducts = state => state.randomProducts.data
+export const selectProducts = state => state.products.data
 export const selectFetchingProducts = state => state.isFetchingProducts
-export default randomProductsSlice.reducer
+export default productsSlice.reducer
