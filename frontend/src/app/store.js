@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import searchBarReducer from '../components/searchBar/searchBarSlice'
+import randomProductsReducer from '../components/randomProducts/randomProductsSlice'
 
 export const store = configureStore({
   reducer: {
-    searchBar: searchBarReducer
+    searchBar: searchBarReducer,
+    randomProducts: randomProductsReducer
   }
 })
