@@ -41,14 +41,14 @@ export const randomProductsSlice = createSlice({
         const { requestId } = action.meta
         if (state.isFetchingProducts === true && state.productsRequestId === requestId) {
           state.isFetchingProducts = false
-          
-          if(action.payload) {
-            for(let i = 0; i < 8; i++) {
+
+          if (action.payload) {
+            for (let i = 0; i < 8; i++) {
               state.data.push(action.payload[Math.floor((Math.random() * 9))])
             }
           } else {
             state.data = []
-          } 
+          }
           state.productsRequestId = null
         }
       })

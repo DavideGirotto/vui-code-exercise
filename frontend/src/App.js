@@ -47,7 +47,7 @@ function App () {
           <Grid item xs={12} md={10} lg={8} xl={6}>
             <SearchBar />
 
-            {!isFetchingProducts && <ProductsList products={products} title="Featured Products"/>}
+            {!isFetchingProducts && <ProductsList products={products} title='Featured Products' />}
           </Grid>
         </Grid>
 
