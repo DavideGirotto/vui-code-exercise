@@ -66,21 +66,21 @@ export default function ProductsList ({ products, title }) {
   }, [products])
 
   const sortProducts = type => {
-    let sorted = [...products]
+    const sorted = [...products]
 
     switch (type) {
       case 'rating':
-        sorted.sort((a, b) => {return b.rating - a.rating})
+        sorted.sort((a, b) => { return b.rating - a.rating })
         setSortedProducts(sorted)
-        break;
+        break
       case 'pricing':
-        sorted.sort((a, b) => {return Number(b.price.replace('$','')) - Number(a.price.replace('$',''))})
+        sorted.sort((a, b) => { return Number(b.price.replace('$', '')) - Number(a.price.replace('$', '')) })
         setSortedProducts(sorted)
-        break;
+        break
       case 'availability':
-        sorted.sort((a, b) => {return b.availability - a.availability})
+        sorted.sort((a, b) => { return b.availability - a.availability })
         setSortedProducts(sorted)
-        break;
+        break
       default:
         setSortedProducts(products)
     }

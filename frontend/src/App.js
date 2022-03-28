@@ -7,6 +7,7 @@ import SearchBar from './components/searchBar/SearchBar'
 import ProductsList from './components/productList/ProductsList'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRandomProducts, selectRandomProducts, selectFetchingProducts } from './components/randomProducts/randomProductsSlice'
+import { selectSearchResults } from './components/searchBar/searchBarSlice'
 
 const useStyle = makeStyles({
   header: {
@@ -18,6 +19,7 @@ function App () {
   const dispatch = useDispatch()
   const isFetchingProducts = useSelector(selectFetchingProducts)
   const products = useSelector(selectRandomProducts)
+  const searchResults = useSelector(selectSearchResults)
 
   useEffect(() => {
     if (products.length === 0) dispatch(getRandomProducts())
@@ -47,7 +49,9 @@ function App () {
           <Grid item xs={12} md={10} lg={8} xl={6}>
             <SearchBar />
 
-            {!isFetchingProducts && <ProductsList products={products} title='Featured Products' />}
+            {searchResults.length > 0
+              ? <ProductsList products={searchResults} title='Search Results' />
+              : !isFetchingProducts && <ProductsList products={products} title='Featured Products' />}
           </Grid>
         </Grid>
 
