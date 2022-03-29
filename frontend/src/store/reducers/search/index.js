@@ -33,13 +33,13 @@ const initialState = {
 
 export const getSearchResults = createAsyncThunk(
   'results/get',
-  async (context, { getState, requestId, dispatch, rejectWithValue }) => {
+  async (availabilityFilter, { getState, requestId, dispatch, rejectWithValue }) => {
     const { searchRequestId, isFetchingResults } = getState().search
 
     if (!isFetchingResults || requestId !== searchRequestId) return
 
     try {
-      const response = await get(`${serverUrl}/search`)
+      const response = await get(`${serverUrl}/search?availability=${availabilityFilter}`)
       return response
     } catch (err) {
       return rejectWithValue(err)

@@ -147,6 +147,7 @@ export default function SearchBar () {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [status, setStatus] = useState('closed')
+  const [availabilityFilter, setAvailabilityFilter] = useState(false)
   const categories = useSelector(selectCategoriesSuggestions)
   const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
   const products = useSelector(selectProducts)
@@ -164,7 +165,7 @@ export default function SearchBar () {
 
   const handleSearch = () => {
     closeSearchBar()
-    dispatch(getSearchResults())
+    dispatch(getSearchResults(availabilityFilter))
   }
 
   const handleFocus = () => {
@@ -175,7 +176,7 @@ export default function SearchBar () {
   const handleSubmit = e => {
     e.preventDefault()
     closeSearchBar()
-    dispatch(getSearchResults())
+    dispatch(getSearchResults(availabilityFilter))
   }
 
   const handleTextChange = value => {
@@ -215,7 +216,15 @@ export default function SearchBar () {
         </SearchField>
 
         <AvailabilityFilter>
-          <FormControlLabel control={<Checkbox />} label='Show only available products' />
+          <FormControlLabel 
+            control={
+              <Checkbox
+                checked={availabilityFilter}
+                onChange={e => setAvailabilityFilter(e.target.checked)}
+              />
+            } 
+            label='Show only available products' 
+          />
         </AvailabilityFilter>
 
         {status === 'open' &&
