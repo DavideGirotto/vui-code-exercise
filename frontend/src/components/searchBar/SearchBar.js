@@ -7,6 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import List from '@mui/material/List';
@@ -16,7 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAutocompleteSuggestions, getSearchResults, selectAutocompleteSuggestions, selectCategoriesSuggestions } from '../../store/reducers/search'
+import { getAutocompleteSuggestions, getSearchResults, resetSearch, selectAutocompleteSuggestions, selectCategoriesSuggestions } from '../../store/reducers/search'
 import { selectProducts } from '../../store/reducers/products'
 
 const SearchContainer = styled(Box)({
@@ -61,6 +63,12 @@ const SearchIconWrapper = styled(Box)(({ theme }) => ({
     background: theme.palette.primary.dark
   }
 }))
+
+const CloseIconWrapper = styled(IconButton)({
+  position: 'absolute',
+  top: 8,
+  right: 80,
+})
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -138,6 +146,12 @@ export default function SearchBar () {
   const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
   const products = useSelector(selectProducts)
 
+  const handleReset = () => {
+    setStatus('closed')
+    setSearchText('')
+    dispatch(resetSearch())
+  }
+
   const handleSearch = () => {
     setStatus('closed')
     dispatch(getSearchResults())
@@ -175,7 +189,11 @@ export default function SearchBar () {
             />
           </form>
 
-          <SearchIconWrapper onClick={handleSearch}>
+          {searchText !== '' && <CloseIconWrapper size="small" onClick={handleReset}>
+            <CloseIcon fontSize="small"/>
+          </CloseIconWrapper>}
+
+          <SearchIconWrapper onClick={handleSearch} >
             <SearchIcon />
           </SearchIconWrapper>
         </SearchField>
