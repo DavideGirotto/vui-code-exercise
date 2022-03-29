@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import logo from './logo.svg'
-import {styled} from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import SearchBar from './components/searchBar/SearchBar'
@@ -12,8 +12,8 @@ import { selectSearchResults } from './store/reducers/search'
 const Header = styled(Grid)(({ theme }) => ({
   margin: '16px 0',
   [theme.breakpoints.up('md')]: {
-    margin: '64px 0',
-  },
+    margin: '64px 0'
+  }
 }))
 
 function App () {
@@ -25,7 +25,6 @@ function App () {
   useEffect(() => {
     if (products.length === 0) dispatch(getProducts())
   }, [dispatch, products])
-
 
   return (
     <>
