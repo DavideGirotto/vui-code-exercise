@@ -1,58 +1,11 @@
-import styled from '@mui/system/styled'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import CardMedia from '@mui/material/CardMedia'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import { useEffect, useState } from 'react'
-
-const ProductsListContainer = styled(Box)({
-  margin: '64px 0'
-})
-
-const SectionTitle = styled(Typography)(({ theme }) => ({
-  padding: '32px 0',
-  color: theme.palette.primary.main
-}))
-
-const ProductImage = styled(CardMedia)({
-  maxHeight: '200px'
-})
-
-const ProductDescription = styled(CardContent)({
-  fontSize: '14px'
-})
-
-const ProductContainer = styled(Card)({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column'
-})
-
-const Price = styled(CardContent)(({ theme }) => ({
-  fontSize: '24px',
-  fontWeight: 'bold',
-  color: theme.palette.primary.main
-}))
-
-const ProductRating = styled(CardContent)({
-  paddingTop: 0,
-  paddingBottom: 0
-})
-
-const CardFooter = styled(CardActions)({
-  flexGrow: 1,
-  alignItems: 'flex-end',
-  padding: '16px',
-  fontSize: '14px'
-})
+import { CardFooter, Price, ProductContainer, ProductDescription, ProductImage, ProductRating, ProductsListContainer, SectionTitle } from './ProductsList.styles'
 
 export default function ProductsList ({ products, title }) {
   const sortingTypes = ['featured', 'rating', 'pricing', 'availability']

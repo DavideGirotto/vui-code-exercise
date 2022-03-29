@@ -1,45 +1,13 @@
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
 import { selectAutocompleteSuggestions } from '../../store/reducers/search'
 import { selectProducts } from '../../store/reducers/products'
 import { useSelector } from 'react-redux'
-
-const AutocompleteItem = styled(Box)(({ theme }) => ({
-  padding: 16,
-  cursor: 'pointer',
-  borderRadius: 16,
-  transition: '300ms',
-  '&:hover': {
-    background: 'rgba(0, 0, 0, 0.08)',
-    color: theme.palette.primary.main
-  }
-}))
-
-const ProductSuggestions = styled(Grid)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  padding: 0
-}))
-
-const Product = styled(ListItem)(({ theme }) => ({
-  alignItems: 'stretch',
-  columnGap: 20,
-  padding: 16,
-  borderRadius: 16,
-  cursor: 'pointer',
-  transition: '300ms',
-  '&:hover': {
-    background: 'rgba(0, 0, 0, 0.08)',
-    color: theme.palette.primary.main
-  }
-}))
+import { AutocompleteItem, Product, ProductSuggestions } from './SearchSuggestion.styles'
 
 export default function SearchSuggestions ({ handleClick }) {
   const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
