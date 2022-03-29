@@ -30,7 +30,7 @@ export default function SearchBar () {
   }
 
   return (
-    <SearchContainer>
+    <SearchContainer data-testid='search-bar'>
       <SearchWrapper elevation={status !== 'closed' ? 3 : 0}>
 
         <SearchField />

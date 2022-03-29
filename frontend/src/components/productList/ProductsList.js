@@ -100,7 +100,7 @@ export default function ProductsList ({ products, title }) {
       >
         {sortedProducts.map((product, index) => (
           <Grid item key={index} xs={6} md={4}>
-            <ProductContainer>
+            <ProductContainer data-testid='product-card'>
               <ProductImage
                 sx={{ maxHeight: '200px' }}
                 component='img'

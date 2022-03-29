@@ -47,7 +47,6 @@ describe('SearchResults API', () => {
   })
 })
 
-
 describe('Autocomplete API', () => {
   afterEach(() => {
     store.dispatch(resetSearch())
