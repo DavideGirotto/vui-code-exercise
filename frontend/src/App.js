@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import logo from './logo.svg'
-import makeStyles from '@mui/styles/makeStyles'
+import {styled} from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import SearchBar from './components/searchBar/SearchBar'
@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProducts, selectFetchingProducts, selectProducts } from './store/reducers/products'
 import { selectSearchResults } from './store/reducers/search'
 
-const useStyle = makeStyles({
-  header: {
-    margin: '64px 0'
-  }
-})
+const Header = styled(Grid)(({ theme }) => ({
+  margin: '16px 0',
+  [theme.breakpoints.up('md')]: {
+    margin: '64px 0',
+  },
+}))
 
 function App () {
   const dispatch = useDispatch()
@@ -25,13 +26,11 @@ function App () {
     if (products.length === 0) dispatch(getProducts())
   }, [dispatch, products])
 
-  const classes = useStyle()
 
   return (
     <>
       <Container maxWidth={false}>
-        <Grid
-          className={classes.header}
+        <Header
           container
           justifyContent='center'
           alignItems='center'
@@ -39,7 +38,7 @@ function App () {
           <Grid item xs={8} sm={6} md={4} lg={3}>
             <img src={logo} alt='logo' />
           </Grid>
-        </Grid>
+        </Header>
 
         <Grid
           container

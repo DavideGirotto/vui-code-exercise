@@ -26,15 +26,20 @@ const SearchContainer = styled(Box)({
   minHeight: '75px',
 })
 
-const SearchWrapper = styled(Paper)({
+const SearchWrapper = styled(Paper)(({ theme }) => ({
   position: 'absolute',
   borderRadius: '32px',
   padding: 16,
   width: 'calc(100% - 32px)',
   border: '1px solid #f5f5f5',
-  maxHeight: '560px',
-  zIndex: 10
-})
+  maxHeight: '460px',
+  zIndex: 10,
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  [theme.breakpoints.up('md')]: {
+    maxHeight: '560px',
+  },
+}))
 
 const SearchField = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -146,20 +151,30 @@ export default function SearchBar () {
   const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
   const products = useSelector(selectProducts)
 
-  const handleReset = () => {
+  const closeSearchBar = () => {
+    document.getElementsByTagName('body')[0].style.overflow = 'auto'   
     setStatus('closed')
+  }
+
+  const handleReset = () => {
+    closeSearchBar()
     setSearchText('')
     dispatch(resetSearch())
   }
 
   const handleSearch = () => {
-    setStatus('closed')
+    closeSearchBar()
     dispatch(getSearchResults())
+  }
+
+  const handleFocus = () => {
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+    searchText === '' ? setStatus('open') : setStatus('expanded')
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    setStatus('closed')
+    closeSearchBar()
     dispatch(getSearchResults())
   }
 
@@ -171,7 +186,7 @@ export default function SearchBar () {
 
   const handleSuggestionClick = value => {
     setSearchText(value)
-    setStatus('closed')
+    closeSearchBar()
     dispatch(getAutocompleteSuggestions(value))
   }
 
@@ -183,7 +198,7 @@ export default function SearchBar () {
             <StyledInputBase
               placeholder='Search for a product or brand…'
               value={searchText}
-              onFocus={() => searchText === '' ? setStatus('open') : setStatus('expanded')}
+              onFocus={handleFocus}
               onChange={e => handleTextChange(e.target.value)}
               onSubmit={handleSearch}
             />
@@ -254,7 +269,7 @@ export default function SearchBar () {
       <Backdrop
         sx={{ color: '#fff', zIndex: 1 }}
         open={status !== 'closed'}
-        onClick={() => setStatus('closed')}
+        onClick={closeSearchBar}
       />
     </SearchContainer>
   )
