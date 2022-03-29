@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { filterAvailability, getSearchResults, selectAvailabilityFilter, selectSearchText } from '../../store/reducers/search'
 import { AvailabilityFilterWrapper } from './AvailabilityFilter.styles'
 
-
 export default function AvailabilityFilter () {
   const dispatch = useDispatch()
   const searchText = useSelector(selectSearchText)
