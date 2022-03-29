@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { get, serverUrl } from '../../utils'
 
 const initialState = {
-  currentSearchTerm: '',
+  searchBarStatus: 'closed',
+  currentSearchText: '',
+  availabilityFilter: false,
 
   autocompleteSuggestions: [],
   isFetchingAutocomplete: false,
@@ -33,13 +35,13 @@ const initialState = {
 
 export const getSearchResults = createAsyncThunk(
   'results/get',
-  async (availabilityFilter, { getState, requestId, dispatch, rejectWithValue }) => {
+  async (context, { getState, requestId, dispatch, rejectWithValue }) => {
     const { searchRequestId, isFetchingResults } = getState().search
 
     if (!isFetchingResults || requestId !== searchRequestId) return
 
     try {
-      const response = await get(`${serverUrl}/search?availability=${availabilityFilter}`)
+      const response = await get(`${serverUrl}/search?availability=${getState().search.availabilityFilter}`)
       return response
     } catch (err) {
       return rejectWithValue(err)
@@ -67,7 +69,10 @@ export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    resetSearch: () => initialState
+    resetSearch: () => initialState,
+    filterAvailability: (state, action) => { state.availabilityFilter = action.payload },
+    setSearchText: (state, action) => { state.currentSearchText = action.payload },
+    setSearchBarStatus: (state, action) => { state.searchBarStatus = action.payload }
   },
   extraReducers: builder => {
     builder
@@ -119,9 +124,12 @@ export const searchSlice = createSlice({
   }
 })
 
-export const { resetSearch } = searchSlice.actions
+export const { resetSearch, filterAvailability, setSearchText, setSearchBarStatus } = searchSlice.actions
 
+export const selectSearchBarStatus = (state) => state.search.searchBarStatus
 export const selectSearchResults = (state) => state.search.results
+export const selectSearchText = (state) => state.search.currentSearchText
+export const selectAvailabilityFilter = (state) => state.search.availabilityFilter
 export const selectAutocompleteSuggestions = (state) => state.search.autocompleteSuggestions
 export const selectCategoriesSuggestions = (state) => state.search.categoriesSuggestions
 

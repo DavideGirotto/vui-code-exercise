@@ -21,6 +21,13 @@ const AutocompleteItem = styled(Box)(({ theme }) => ({
   }
 }))
 
+const ProductSuggestions = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  padding: 0
+}))
+
 const Product = styled(ListItem)(({ theme }) => ({
   alignItems: 'stretch',
   columnGap: 20,
@@ -34,17 +41,23 @@ const Product = styled(ListItem)(({ theme }) => ({
   }
 }))
 
-export default function SearchSuggestions ({ handleSuggestionClick }) {
+export default function SearchSuggestions ({ handleClick }) {
   const autocompleteSuggestions = useSelector(selectAutocompleteSuggestions)
   const products = useSelector(selectProducts)
 
   return (
     <Grid container>
       <Grid item xs={12} sm={6}>
-        {autocompleteSuggestions.map((s, index) => <AutocompleteItem key={index} onClick={() => handleSuggestionClick(s.name)}>{s.name}</AutocompleteItem>)}
+        {autocompleteSuggestions.map((s, index) =>
+          <AutocompleteItem
+            key={index}
+            onClick={() => handleClick(s.name)}
+          >
+            {s.name}
+          </AutocompleteItem>)}
       </Grid>
 
-      <Grid item xs={12} sm={6} component={List} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 0 }}>
+      <ProductSuggestions item xs={12} sm={6} component={List}>
         {products.map((p, index) => (
           <Product key={index}>
             <ListItemAvatar>
@@ -55,6 +68,7 @@ export default function SearchSuggestions ({ handleSuggestionClick }) {
                 sx={{ border: '1px solid #eee', width: 96, height: 96 }}
               />
             </ListItemAvatar>
+
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Box>
                 <Typography sx={{ fontSize: 14 }}>{p.description.length <= 40 ? p.description : p.description.substring(0, 37) + '...'}</Typography>
@@ -74,7 +88,7 @@ export default function SearchSuggestions ({ handleSuggestionClick }) {
             </Box>
           </Product>
         ))}
-      </Grid>
+      </ProductSuggestions>
     </Grid>
   )
 }
