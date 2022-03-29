@@ -152,7 +152,7 @@ export default function SearchBar () {
   const products = useSelector(selectProducts)
 
   const closeSearchBar = () => {
-    document.getElementsByTagName('body')[0].style.overflow = 'auto'   
+    if(window.innerWidth <= 899) {document.getElementsByTagName('body')[0].style.overflow = 'auto' }  
     setStatus('closed')
   }
 
@@ -168,7 +168,7 @@ export default function SearchBar () {
   }
 
   const handleFocus = () => {
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+    if(window.innerWidth <= 899) {document.getElementsByTagName('body')[0].style.overflow = 'hidden'}
     searchText === '' ? setStatus('open') : setStatus('expanded')
   }
 
@@ -187,6 +187,7 @@ export default function SearchBar () {
   const handleSuggestionClick = value => {
     setSearchText(value)
     closeSearchBar()
+    dispatch(getSearchResults(value))
     dispatch(getAutocompleteSuggestions(value))
   }
 
