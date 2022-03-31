@@ -1,4 +1,5 @@
-import { cleanup, screen } from '@testing-library/react'
+import { cleanup, screen, waitFor } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
 import { store } from './store'
 import { resetProducts } from './store/reducers/products'
 import { getSearchResults, resetSearch } from './store/reducers/search'
@@ -36,18 +37,21 @@ describe('App test', () => {
     expect(products.length).toEqual(3)
   })
 
-  it.only('shows the search results instead of the featured products', async () => {
+  it('shows the search results instead of the featured products', async () => {
     get.mockResolvedValueOnce(searchDataset)
     let title = screen.getByText('Featured Products')
-    const products = screen.getAllByTestId('product-card')
+    let products = screen.getAllByTestId('product-card')
 
     expect(title).toBeVisible()
     expect(products.length).toEqual(3)
 
     await store.dispatch(getSearchResults())
 
-    title = screen.getByText('Search Results')
-
-    expect(title).toBeVisible()
+    await waitFor(() => {
+      title = screen.getByText('Search Results')
+      products = screen.getAllByTestId('product-card')
+      expect(title).toBeVisible()
+      expect(products.length).toEqual(searchDataset.length)
+    })
   })
 })
