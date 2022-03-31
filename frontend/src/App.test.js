@@ -1,5 +1,4 @@
 import { cleanup, screen, waitFor } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import { store } from './store'
 import { resetProducts } from './store/reducers/products'
 import { getSearchResults, resetSearch } from './store/reducers/search'
