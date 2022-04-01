@@ -48,6 +48,7 @@ export default function SearchField () {
     <InputWrapper sx={status !== 'closed' ? { border: '2px solid #264990' } : {}}>
       <form onSubmit={handleSubmit}>
         <StyledInputBase
+          inputProps={{ 'data-testid': 'search-bar-input' }}
           placeholder='Search for a product or brand…'
           value={searchText}
           onFocus={handleFocus}
